@@ -1,49 +1,52 @@
 <template>
-  <h1>영화정보</h1>
-  <div>
-    <div v-for="(item, i) in data" :key="i" class="item"> <!-- :key="키값" 반복문을 사용할 때는 각각의 자료를 구분하기 위한 키값이 필요-->
-      <figure>
-        <img :src="require(`${item.imgUrl}`)" :alt="item.title + ' image'"> <!-- 이미지 경로 지정 주의해서 할 것-->
-      </figure>
-      <div class="info">
-        <h3 :style="textColor"> {{ item.title }} </h3> <!-- :속성명="데이터" -->
-        <p>개봉: {{ item.year }}</p>
-        <p>장르: {{ item.category }}</p>
-        <button @click="increaseLike(i)">좋아요</button> <span>{{ item.like }}</span>
-        <p>
-          <button @click="isModal=true">상세보기</button>
-        </p>
-      </div>
-    </div>
-  </div>
+  <Navbar />
+  <Event :text="text"/> <!-- 속성명(props 변수)="보낼 값" -->
+  <SearchBar :data="data" />
+  <Movies
+    :data="data"
+    @openModal="isModal=true; selectedMovie=$event"
+    @increaseLike="increaseLike($event)"
+  /> <!-- 전달된 값은 $event로 받음-->
 
-  <div class="modal" v-if="isModal">
-    <div class="inner">
-      <h3>{{ data[0].title }}</h3>
-      <p>영화 상세정보</p>
-      <div>{{ data }}</div>
-      <button @click="isModal=false">닫기</button>  
-    </div>
-  </div>
+
+  <Modal 
+  :data="data" 
+  :isModal="isModal" 
+  :selectedMovie="selectedMovie"
+  @closeModal="isModal=false"
+  /> <!-- 자식 컴포넌트에서 발생한 이벤트명(커스템 이벤트)은 앞에 @추가-->
 </template>
 
 <script>
-  import data from './assets/movies';
-  console.log(data);
+  import data from './assets/movies'; // 영화 데이터
+  import Navbar from './components/Navbar.vue'; // 네비게이션바
+  import Modal from './components/Modal.vue';
+  import Event from './components/Event.vue';
+  import Movies from './components/Movies.vue';
+  import SearchBar from './components/SearchBar.vue';
+  
   export default {
     name: 'App',
     data() {
       return {
         isModal: false,
-        textColor : "color: blue",
         data: data,
+        selectedMovie: 0,
+        text: "NETPLIX 강렬한 운명의 드라마, 경기크리처"
         }
     },
     methods: {
       increaseLike(i) {
         this.data[i].like += 1;
       }
-    }
+    },
+    components: {
+      Navbar: Navbar,
+      Modal: Modal,
+      Event: Event,
+      Movies: Movies,
+      SearchBar: SearchBar,
+    },
   }
 </script>
 

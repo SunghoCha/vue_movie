@@ -1,16 +1,19 @@
 <template>
   <Navbar />
   <Event :text="text"/> <!-- 속성명(props 변수)="보낼 값" -->
-  <SearchBar :data="data" />
+  <SearchBar 
+    :data="data_temp" 
+    @searchMovie="searchMovie($event)"  
+  />
+  <p> <button @click="showAllMovies">전체보기</button> </p>
   <Movies
-    :data="data"
+    :data="data_temp"
     @openModal="isModal=true; selectedMovie=$event"
     @increaseLike="increaseLike($event)"
   /> <!-- 전달된 값은 $event로 받음-->
 
-
   <Modal 
-  :data="data" 
+  :data="data_temp" 
   :isModal="isModal" 
   :selectedMovie="selectedMovie"
   @closeModal="isModal=false"
@@ -30,14 +33,29 @@
     data() {
       return {
         isModal: false,
-        data: data,
+        data: data, // 영화 데이터 원본
+        data_temp: [...data], // 영화 데이터 사본
         selectedMovie: 0,
         text: "NETPLIX 강렬한 운명의 드라마, 경기크리처"
         }
     },
     methods: {
-      increaseLike(i) {
-        this.data[i].like += 1;
+      increaseLike(id) {
+        this.data.find(item => {
+          if (item.id == id) {
+            item.like += 1;
+          }
+        })
+      },
+      searchMovie(title) {
+        // 영화 제목이 포함된 데이터를 가져옴
+        this.data_temp = this.data.filter(item => {
+          return item.title.includes(title)
+        });
+      },
+      showAllMovies() {
+        // 전체 영화 목록 조회
+        return this.data_temp = [...this.data];
       }
     },
     components: {

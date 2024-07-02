@@ -1,7 +1,11 @@
 <template>
     <div class="search-box">
         <input type="search" 
-        @change="inputText = $event.target.value"
+        @change="
+            $emit('searchMovie', $event.target.value)
+            inputText = 
+                $event.target.value; 
+                $event.target.value= ''"
         placeholder="검색어 입력"
         >
         <button>검색</button>
@@ -27,10 +31,25 @@ export default {
                 return item.title.includes(name);
             })
             console.log(findName);
+            if (findName.length == 0) {
+                alert('해당하는 자료가 없습니다.');
+            }
         }
     }
 }
 </script>
 <style>
-    
+    .search-box {
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search-box input {
+        padding: 5px 10px;
+    }
+
+    .search-box buzztton {
+        margin: 0;
+    }
 </style>

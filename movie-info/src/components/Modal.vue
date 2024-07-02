@@ -1,7 +1,7 @@
 <template>
   <div class="modal" v-if="isModal">
     <div class="inner">
-      <h3>{{ data[selectedMovie].title }}</h3>
+      <h3>{{ data.find(item => item.id == selectedMovie)?.title }}</h3>
       <p>영화 상세정보</p>
       <div></div>
       <button @click="$emit('closeModal')">닫기</button>  <!-- 부모에게 $emit('이벤트명')으로 변경요청-->

@@ -1,12 +1,12 @@
 <template>
     <section id="portfolio" class="container">
         <h1>portfolio</h1>
-        <ul class="list row"> 
+        <ul class="list row">
             <li class="col-md-4" v-for="(item) in data" :key="item.id">
                 <img :src="item.imgUrl" alt="i">
-                <h3>{{ item.title}}</h3>
+                <h3>{{ item.title }}</h3>
                 <p>{{ item.desc }}</p>
-            </li>  
+            </li>
         </ul>
     </section>
 </template>

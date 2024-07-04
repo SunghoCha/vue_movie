@@ -1,16 +1,13 @@
 <script setup>
-  import TitlePage from './components/TitlePage.vue';  
-  import Portfolio from './components/Portfolio.vue';
-  import About from './components/About.vue';
-  import Navbar from './components/Navbar.vue'
+  import Navbar from './components/Navbar.vue';
+  import data from './assets/portfolio';
 </script>
+
 <template>
-
-<Navbar/>
-
-<router-view/>
-
+  <Navbar/>
+  <router-view :data="data"/>
 </template>
 
 <style scoped lang="scss">
+
 </style>

@@ -1,5 +1,5 @@
 <script setup>
-  import TitlePage from './components/Title.vue';  
+  import TitlePage from './components/TitlePage.vue';  
   import Portfolio from './components/Portfolio.vue';
   import About from './components/About.vue';
 </script>
@@ -13,18 +13,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#title">Home</a>
+          <router-link class="nav-link active" aria-current="page" to="/title">Home</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#portfolio">Portfolio</a>
+          <router-link class="nav-link" to="/portfolio">Portfolio</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#about">About</a>
+          <router-link class="nav-link" to="/about">About</router-link>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <router-link class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
-          </a>
+          </router-link>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Action</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -40,9 +40,9 @@
     </div>
   </div>
 </nav>
-<TitlePage />
-<Portfolio />
-<About />
+
+<router-view/>
+
 </template>
 
 <style scoped lang="scss">

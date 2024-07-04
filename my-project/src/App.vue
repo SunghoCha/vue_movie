@@ -1,6 +1,8 @@
 <script setup>
-    import Title from './components/Title.vue';  
-</script> 
+  import TitlePage from './components/Title.vue';  
+  import Portfolio from './components/Portfolio.vue';
+  import About from './components/About.vue';
+</script>
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
   <div class="container-fluid">
@@ -11,10 +13,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="#title">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">GitHub</a>
+          <a class="nav-link" href="#portfolio">Portfolio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,7 +32,6 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
-
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -36,7 +40,9 @@
     </div>
   </div>
 </nav>
-<Title />
+<TitlePage />
+<Portfolio />
+<About />
 </template>
 
 <style scoped lang="scss">

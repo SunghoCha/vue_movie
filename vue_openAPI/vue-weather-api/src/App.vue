@@ -9,7 +9,7 @@
 
   // 앱이 실행되면 날씨 데이터 가져오기
   onMounted(() => {
-    store.dispatch('getWeather');
+    store.dispatch('getWeather');f
   })
 
   const onSearchCity = (city) => {

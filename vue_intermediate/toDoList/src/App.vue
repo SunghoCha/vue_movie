@@ -1,30 +1,49 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <TodoHeader/>
+  <TodoInput @add = "addTodo"/>
+  <TodoList :Items = "todoItems" @remove = "removeTodo"/>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+<script>
+import { ref } from 'vue'
+import TodoHeader from './components/TodoHeader.vue'
+import TodoInput from './components/TodoInput.vue'
+import TodoList from './components/TodoList.vue'
+
+  export default {
+    components: {
+      TodoHeader,
+      TodoInput,
+      TodoList
+    },
+
+    setup() {
+      const todoItems = ref([]);
+
+      const fetchTodos = () => {
+        const result = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const todoItem = localStorage.key(i);
+            result.push(todoItem);
+        }
+        return result;
+      }
+      todoItems.value = fetchTodos();
+      const addTodo = (todo) => {
+        todoItems.value.push(todo);
+        localStorage.setItem(todo, todo)
+      }
+      
+      const removeTodo = (item, index) => {
+        todoItems.value.splice(index, 1);
+        localStorage.removeItem(item);
+      }
+
+      return { todoItems, addTodo }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+
 </style>

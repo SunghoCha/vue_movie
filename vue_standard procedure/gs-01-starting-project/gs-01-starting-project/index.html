@@ -10,13 +10,16 @@
     <div id="app">
       <div>
         <label for="goal">Goal</label>
-        <input type="text" id="goal" />
-        <button>Add Goal</button>
+        <input type="text" id="goal" v-model="enteredValue"/>
+        <button @click="addGoal">Add Goal</button>
       </div>
       <ul>
-        
+        <li v-for="(goal, index) in goals">
+          {{ goal }}
+        </li>
       </ul>
     </div>
-    <script src="app.js"></script>
+    <script src="https://unpkg.com/vue@3.4.9/dist/vue.global.js" defer></script>
+    <script src="app.js" defer></script>
   </body>
 </html>

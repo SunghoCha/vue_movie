@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@3.4.9/dist/vue.global.js" defer></script> 
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Dynamic Styling</h1>
+    </header>
+    <section id="styling">
+      <div 
+        class="demo"
+        :class="boxAClasses" 
+        @click="boxSelected('A')"
+      >A
+      </div> <!-- :class의 결과를 class와 병합, 동적 클래스 방식이 복잡해지면 이렇게 computed로 대체하는게 좋음 -->
+      <div 
+      class="demo"
+      :class="{active: boxBSelected}" 
+      @click="boxSelected('B')"
+      >B
+      </div>
+      <div 
+      :class="['demo', {active: boxCSelected}]" 
+      @click="boxSelected('C')"
+      >C
+      </div> <!-- 배열 구문으로 동적 클래스 생성 방법 -->
+
+    </section>
+  </body>
+</html>

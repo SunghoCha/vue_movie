@@ -22,8 +22,13 @@
       <button @click="removeCount">Remove</button> <!-- removeCount()로 직접 호출해도 되고 removeCount로 써도 자동으로 호출됨, ()안에 매개변수 전달 가능-->
       <p v-once>Starting Counter: {{ counter }}</p>
       <p>Result: {{ counter }}</p>
-      <input type="text" @input="setName($event, 'text')" @keyup.enter="confirmedInput"> <!-- event와 파라미터를 동시에 넘겨야하는 상황이라면  $를 사용해서 event 넘겨줌-->
+      <!-- <input type="text" v-bind:value="name" v-on:input="setName($event, 'text')" @keyup.enter="confirmedInput">  event와 파라미터를 동시에 넘겨야하는 상황이라면  $를 사용해서 event 넘겨줌-->
+      <input type="text" v-model="name" @keyup.enter="confirmedInput"> <!-- v-model은 v-bind:value와 v-on:input의 축약어 (양방향 바인딩)-->
+      <input type="text" v-model="lastName">
+      <button @click="resetInput">Reset Input</button>
       <p>Your name: {{ name }}</p>
+      <!-- <p>Full name: {{ outputFullName() }}</p>  vue가 랜더링을 다시 할 때 모든 메서들을 실행할 수 밖에 없음. vue는 메서드 내부에서 변화요소가 있는지를 미리 알 방법이 없기 때문 -> computed 사용 -->
+      <p>Full name: {{ fullname }}</p> <!-- 처음 랜더링될때 computed에 있는 내용을 캐싱하고 fullname이 name과 의존성이 있다는 사실을 미리 알 수 있음 -> 랜더링될때마다 무조건적인 호출을 피할 수 있음-->
       <p>Your name: {{ confirmedName }}</p>
       <form @submit.prevent="submitForm">
         <input type="text">

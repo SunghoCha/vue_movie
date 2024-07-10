@@ -9,7 +9,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="https://unpkg.com/vue@3.4.9/dist/vue.global.js" defer></script> 
     <script src="app.js" defer></script>
   </head>
   <body>
@@ -18,11 +18,16 @@
     </header>
     <section id="user-goals">
       <h2>My course goals</h2>
-      <input type="text" />
-      <button>Add Goal</button>
-      <p>No goals have been added yet - please start adding some!</p>
-      <ul>
-        <li>Goal</li>
+      <input type="text" v-model="goalText"/>
+      <button @click="addGoal">Add Goal</button>
+      <p> {{ printGoal }} </p>
+      <p v-if="goals.length === 0">No goals have been added yet - please start adding some!</p>
+      <ul v-else> <!-- v-if 바로 다음에 와야함. 단순히 요소를 숨기는 것이 아니라 탈부착하는 개념. 요소를 추가하고 제거할 때는 성능이 저하될 수 있음--> 
+        <!-- *v-show : css로 항목을 표시하거나 숨김, 일반적으로 가시성 상태가 자주 바뀌는 요소는 v-show, 나머지는 v-if 사용-->
+        <li v-for="(goal, index) in goals" :key="goal"> <!-- key로 goal.id 같은 고유식별자를 사용해줘야함. vue에서는 최적화를 위해 동적으로 변경된 부분만 갈아끼우기 때문에 goal의 변경되지 않은 요소들과 섞일 위험 있음. -->
+          {{ index }}. {{ goal }} <!-- 통째로 옮기려면 key에 고유 식별자를 부여해줘야 하나의 요소(단위)로 인식할 수 있음. (index는 요소와 상관없는 리스트에 부여된 별개의 값이므로 고유식별자가 아님)-->
+          <button @click="removeGoal(index)">Remove</button>
+        </li>
       </ul>
     </section>
   </body>

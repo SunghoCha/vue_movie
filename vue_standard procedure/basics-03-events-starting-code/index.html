@@ -19,8 +19,16 @@
     <section id="events">
       <h2>Events in Action</h2>
       <button @click="addCount">Add</button> <!-- v-on(@) : 이벤트 리스너와 같은 역할. -->
-      <button @click="removeCount">Remove</button>
+      <button @click="removeCount">Remove</button> <!-- removeCount()로 직접 호출해도 되고 removeCount로 써도 자동으로 호출됨, ()안에 매개변수 전달 가능-->
+      <p v-once>Starting Counter: {{ counter }}</p>
       <p>Result: {{ counter }}</p>
+      <input type="text" @input="setName($event, 'text')" @keyup.enter="confirmedInput"> <!-- event와 파라미터를 동시에 넘겨야하는 상황이라면  $를 사용해서 event 넘겨줌-->
+      <p>Your name: {{ name }}</p>
+      <p>Your name: {{ confirmedName }}</p>
+      <form @submit.prevent="submitForm">
+        <input type="text">
+        <button>Sign Up</button>
+      </form>
     </section>
   </body>
 </html>

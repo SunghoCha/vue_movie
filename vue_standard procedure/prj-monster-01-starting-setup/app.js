@@ -8,6 +8,7 @@ const app = Vue.createApp({
         return {
             playerHealth: 100,
             monsterHealth: 100,
+            attackCount: 0,
             
         }
     },
@@ -17,15 +18,29 @@ const app = Vue.createApp({
         },
         playerBarStyles() {
             return {width: this.playerHealth + '%'}
+        },
+        isCharged() {
+            if (this.attackCount !== 0 && this.attackCount % 3 == 0) {
+                return false;
+            } else {
+                return true;
+            }
         }
     },
     methods: {
         attackMonster() {
+            this.attackCount++;
             this.monsterHealth -= getRandomValue(5, 12);
             this.attackPlayer();
         },
         attackPlayer() {
             this.playerHealth -= getRandomValue(8, 15);
+        },
+        specialAttackMonster() {
+            this.attackCount++;           
+            this.monsterHealth -= getRandomValue(10, 25);
+            this.attackPlayer();
+           
         }
     },
 }) ;

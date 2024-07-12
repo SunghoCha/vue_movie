@@ -12,7 +12,8 @@
             :phone-number="friend.phone"
             :email-address="friend.email"
             :is-favorite="friend.isFavorite"
-            @toggle-favorite="toggleFavoriteStatus"     
+            @toggle-favorite="toggleFavoriteStatus"
+            @delete-friend="deleteFriend"    
         />
     </section>
 </template>
@@ -55,6 +56,9 @@ import NewFriend from './components/NewFriend.vue';
                     isFavorite: false
                 };
                 this.friends.push(newFriend);
+            },
+            deleteFriend(friendId) {
+                this.friends = this.friends.filter(friend => friend.id !== friendId);
             }
         }
     }

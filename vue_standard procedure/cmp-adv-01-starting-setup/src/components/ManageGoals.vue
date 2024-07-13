@@ -5,11 +5,13 @@
 
     <input type="text" ref="goal"/>
     <button @click="setGoal">Set Goal</button>
-    <error-alert v-if="inputIsInvalid">
-        <h2>Input is invalid!</h2>
-        <p>Plase enter at least a few characters... 공백 입력 불가</p>
-        <button @click="confirmError">Okay</button>
-    </error-alert>
+    <teleport to="body"> <!-- 모달창을 body 상단으로 옮겨서 시멘틱 측면에서 올바른 html 구조를 만들 수 있음-->
+        <error-alert v-if="inputIsInvalid">
+            <h2>Input is invalid!</h2>
+            <p>Plase enter at least a few characters... 공백 입력 불가</p>
+            <button @click="confirmError">Okay</button>
+        </error-alert>
+    </teleport>
 </template>
 
 <script>

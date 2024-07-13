@@ -11,7 +11,9 @@
     <button @click="setSelectedComponent('manage-goals')">Manage Goals</button>
     <!-- <active-goals v-if="selectedComponent === 'active-goals'"></active-goals>
     <manage-goals v-if="selectedComponent === 'manage-goals'"></manage-goals> -->
-    <component :is="selectedComponent"></component> <!-- :is 해당 컴포넌트를 보여줌-->
+    <!-- <keep-alive>가 하나의 자식 컴포넌트만 감싸게 변경되어 더 이상 동적 컴포넌트 적용 불가.. -->
+      <component :is="selectedComponent"></component> <!-- :is 해당 컴포넌트를 보여줌-->
+    <!-- </keep-alive> -->
   </div>
 </template>
 

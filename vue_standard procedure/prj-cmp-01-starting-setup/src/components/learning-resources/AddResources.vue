@@ -1,4 +1,14 @@
 <template>
+	<div @clcik="$emit('close')"></div>
+	<base-dialog v-if="inputIsInvalid" title="Invalid Input" @close="confirmError">
+		<template #default>
+			<p>유효하지 않은 입력입니다.</p>
+			<p>입력란을 확인하세요.</p>
+		</template>
+		<template #actions>
+			<base-button @click="confirmError">Okay</base-button>
+		</template>
+	</base-dialog>
 	<base-card>
 		<form @submit.prevent="submitData">
 			<div class="form-control">
@@ -16,7 +26,6 @@
 			<div>
 				<base-button type="submit">Add Resource</base-button> <!-- fall through로 button에 바인딩없이 type 정보 전달-->
 			</div>
-			
 		</form>
 	</base-card>
 </template>
@@ -25,13 +34,25 @@
 	export default {
 		name: 'AddResources',
 		inject: ['addResource'],
+		data() {
+			return {
+				inputIsInvalid: false
+			};
+		},
 		methods: {
 			submitData() {
 				const enteredTitle = this.$refs.titleInput.value;
 				const enteredDesc = this.$refs.descInput.value;
 				const enteredLink = this.$refs.linkInput.value;
 
+				if (enteredTitle.trim() === '' || enteredDesc.trim() === '' || enteredLink.trim() === '' ) {
+					return this.inputIsInvalid = true;
+				}
+
 				this.addResource(enteredTitle, enteredDesc, enteredLink);
+			},
+			confirmError() {
+				this.inputIsInvalid = false;
 			}
 		},
 	}

@@ -1,20 +1,22 @@
 <template>
-	<div @click="$emit('close')"></div> <!-- 백드롭 구현 방법 -->
-	<dialog open>
-		<header>
-			<slot name="header">
-				<h2>{{ title }}</h2> <!-- title만 전달해서 쓰거나 slot 안에 원하는 통쨰로 html포함한 구조 전달해서 사용 가능한 장점-->
-			</slot>
-		</header>
-		<section>
-			<slot></slot>
-		</section>
-		<menu>
-			<slot name="actions">
-				<base-button @click="$emit('close')">Close</base-button>
-			</slot>
-		</menu>
-	</dialog>
+  <teleport to="body">
+    <div @click="$emit('close')"></div> <!-- 백드롭 구현 방법 -->
+    <dialog open>
+      <header>
+        <slot name="header">
+          <h2>{{ title }}</h2> <!-- title만 전달해서 쓰거나 slot 안에 원하는 통쨰로 html포함한 구조 전달해서 사용 가능한 장점-->
+        </slot>
+      </header>
+      <section>
+        <slot></slot>
+      </section>
+      <menu>
+        <slot name="actions">
+          <base-button @click="$emit('close')">Close</base-button>
+        </slot>
+      </menu>
+    </dialog>
+  </teleport>
 </template>
 
 <script>

@@ -3,9 +3,11 @@
 		<base-button @click="setSelectedTab('stored-resources')" :mode="storeResourcesButtonMode">Stored Resources</base-button>
 		<base-button @click="setSelectedTab('add-resources')" :mode="addResourcesButtonMode">Add Resources</base-button>
 	</base-card>
-	<component :is="selectedTab"></component>
+	<keep-alive :include="['AddResources', 'StoredResources']">
+		<component :is="selectedTab"></component> 
+	</keep-alive>
 </template>
-
+<!-- 자식을 동적 컴포넌트 사용한 시점에서 자식에서 부모로 emit을 통해서 데이터 전달하기 번거로움 -> provide/inject 사용-->
 <script>
 import AddResources from './AddResources.vue';
 import StoredResources from './StoredResources.vue';
@@ -35,7 +37,8 @@ import StoredResources from './StoredResources.vue';
 		},
 		provide() {
 			return {
-				resources: this.storedResources	
+				resources: this.storedResources	,
+				addResource: this.addResource, 
 			};
 		},
 		computed: {
@@ -49,7 +52,17 @@ import StoredResources from './StoredResources.vue';
 		methods: {
 			setSelectedTab(tab) {
 				this.selectedTab = tab;
-			}
+			},
+			addResource(title, description, link) {
+				const newResource = {
+					id: new Date().toISOString(),
+					title: title,
+					description: description,
+					link : link
+				};
+				this.storedResources.unshift(newResource); // 배열의 맨 앞에 추가
+				this.selectedTab = 'stored-resources';
+			},
 		}
 		
 	}

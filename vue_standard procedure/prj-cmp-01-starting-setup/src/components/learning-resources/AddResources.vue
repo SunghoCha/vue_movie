@@ -1,17 +1,17 @@
 <template>
 	<base-card>
-		<form>
+		<form @submit.prevent="submitData">
 			<div class="form-control">
 				<label for="title">Title</label>
-				<input id="title" name="title" type="text"/>
+				<input id="title" name="title" type="text" ref="titleInput"/>
 			</div>
 			<div class="form-control">
 				<label for="description">Description</label>
-				<textarea id="description" name="description" rows="3"></textarea>
+				<textarea id="description" name="description" rows="3" ref="descInput"></textarea>
 			</div>
 			<div class="form-control">
 				<label for="link">Link</label>
-				<input id="link" name="link" type="url"/>
+				<input id="link" name="link" type="url" ref="linkInput"/>
 			</div>
 			<div>
 				<base-button type="submit">Add Resource</base-button> <!-- fall through로 button에 바인딩없이 type 정보 전달-->
@@ -20,11 +20,20 @@
 		</form>
 	</base-card>
 </template>
-
+<!-- 등록 폼에서 데이터 처리는 크게 2가지. v-model바인딩 후 data로 연결. or  ref 이용 -->
 <script>
 	export default {
+		name: 'AddResources',
+		inject: ['addResource'],
+		methods: {
+			submitData() {
+				const enteredTitle = this.$refs.titleInput.value;
+				const enteredDesc = this.$refs.descInput.value;
+				const enteredLink = this.$refs.linkInput.value;
 
-		
+				this.addResource(enteredTitle, enteredDesc, enteredLink);
+			}
+		},
 	}
 </script>
 

@@ -24,6 +24,18 @@
         computed: {
 
         },
+=======
+        // data() {
+        //     return {
+        //         activeOption: this.modelValue,
+        //     };
+        // },
+		computed: {
+			activeOption() {
+				return this.modelValue;
+			}
+		},
+>>>>>>> ec36a1294fdea5f2dcc2bd21a720f0e31f05f5cf
         methods: {
             activate(option) {
                 this.activeOption = option;

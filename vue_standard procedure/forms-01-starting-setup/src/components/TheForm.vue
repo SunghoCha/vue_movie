@@ -48,6 +48,9 @@
       </div>
     </div>
     <div class="form-control">
+      <rating-control v-model="rating"></rating-control> <!-- 커스텀 컴포넌트에서 v-model을 사용하는것은 model-value를 수동으로 바인딩하고 update:modelValue 커스텀 이벤트를 수신하는 것과 같음 -->
+    </div>                                                <!-- :model-value="" @update:modelValue="" -->
+    <div class="form-control">
       <input type="checkbox" id="confirm-terms" name="confirm-terms" v-model="confirm"/>
       <label for="confirm-terms">Agree to terms of use?</label>
     </div>
@@ -58,7 +61,9 @@
 </template>
 
 <script>
+import RatingControl from './RatingControl.vue';
 export default {
+  components: { RatingControl },
   data() {
     return {
       userName: '',
@@ -67,7 +72,8 @@ export default {
       interest: [],
       how: null,
       confirm: false,
-      userNameValidity: 'pending' // = 보류
+      userNameValidity: 'pending', // = 보류
+      rating: null,
     };
   },
   methods: {
@@ -93,6 +99,10 @@ export default {
       console.log('Confirm');
       console.log(this.confirm);
       this.confirm = false;
+
+      console.log('Rating');
+      console.log(this.rating);
+      this.rating = null;
 
     },
     validateInput() {

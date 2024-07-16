@@ -46,7 +46,7 @@ export default {
       invalidInput: false,
     };
   },
-  emits: ['survey-submit'],
+  // emits: ['survey-submit'],
   methods: {
     submitSurvey() {
       if (this.enteredName === '' || !this.chosenRating) {
@@ -55,10 +55,29 @@ export default {
       }
       this.invalidInput = false;
 
-      this.$emit('survey-submit', {
-        userName: this.enteredName,
-        rating: this.chosenRating,
-      });
+      // this.$emit('survey-submit', {
+      //   userName: this.enteredName,
+      //   rating: this.chosenRating,
+      // });
+
+      fetch('http://localhost:80/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          name: this.enteredName, 
+          rating: this.chosenRating 
+        },)
+      })
+      .then(function(response) {
+        if (response.ok) {
+          return response.json();
+        }  
+      })
+      .then(function(data) {
+        console.log(data);
+      })
 
       this.enteredName = '';
       this.chosenRating = null;

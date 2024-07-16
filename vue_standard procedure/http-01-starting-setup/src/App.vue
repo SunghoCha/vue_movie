@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <learning-survey ></learning-survey>
+=======
+  <learning-survey></learning-survey>
+>>>>>>> b2423ee96fad2166f69985e89aca7ee4e6ee6781
   <user-experiences></user-experiences>
 </template>
 
@@ -12,6 +16,7 @@ export default {
     LearningSurvey,
     UserExperiences,
   },
+<<<<<<< HEAD
 //   data() {
 //     return {
 //       savedSurveyResults: [],
@@ -28,6 +33,24 @@ export default {
 //       console.log(surveyResult);
 //     },
 //   },
+=======
+  // data() {
+  //   return {
+  //     savedSurveyResults: [],
+  //   };
+  // },
+  // methods: {
+  //   storeSurvey(surveyData) {
+  //     const surveyResult = {
+  //       name: surveyData.userName,
+  //       rating: surveyData.rating,
+  //       id: new Date().toISOString(),
+  //     };
+  //     this.savedSurveyResults.push(surveyResult);
+  //     console.log(surveyResult);
+  //   },
+  // },
+>>>>>>> b2423ee96fad2166f69985e89aca7ee4e6ee6781
 };
 </script>
 

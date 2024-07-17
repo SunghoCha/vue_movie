@@ -43,6 +43,10 @@ export default {
   created() {
     this.loadTeamMembers(this.teamId);
   },
+  // beforeRouteUpdate(to, from, next) { 이런 기능이 있다고만 알아두자. 라우팅을 이용한 데이터 업데이트보단 props 활용이 좋음. 이런 방식은 컴포넌트가 라우팅으로 로드되거나 새로고침 시에만 호출됨
+  //   this.loadTeamMembers(to,params.teamId);
+  //   next();
+  // },
   watch: {
     teamId(newId) {
       this.loadTeamMembers(newId);

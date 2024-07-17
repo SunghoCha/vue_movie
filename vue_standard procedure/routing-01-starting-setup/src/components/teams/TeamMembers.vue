@@ -31,11 +31,13 @@ export default {
     loadTeamMembers(teamId) {
       const selectedTeam = this.teams.find(team => team.id === teamId);
       const members = selectedTeam.members;
+      const teamMembers = [];
       for (const member of members) {
         const selectedUser = this.users.find(user => user.id === member)
-        this.members.push(selectedUser);
+        teamMembers.push(selectedUser);
       }
       this.teamName = selectedTeam.name;
+      this.members = teamMembers;
     }
   },
   created() {

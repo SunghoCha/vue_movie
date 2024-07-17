@@ -2,13 +2,23 @@
   <li>
     <h3>{{ name }}</h3>
     <div class="team-members">{{ memberCount }} Members</div>
-    <router-link :to="'/teams/' + id">View Members</router-link>
+    <router-link :to="teamMembersLink">View Members</router-link>
   </li>
 </template>
 
 <script>
 export default {
   props: ['id', 'name', 'memberCount'],
+  computed: {
+    teamMembersLink() { // :to에 문자열보다 객체를 전달하도록 하자 (가독성, 유지보수성, 쿼리스트링 추가 등..)
+      // return '/teams/' + id + '?sort=asc'";
+      return { 
+        name: 'team-members', 
+        params: { teamId: this.id }, // 경로가 /teams 에서 /newTeams로 바뀐다고해도 이 코드는 변경되지 않는 장점
+        query: { sort : 'asc' }
+      }; 
+    }
+  }
 };
 </script>
 

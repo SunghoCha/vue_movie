@@ -12,10 +12,11 @@ const router = createRouter({
     routes: [
         { path: '/', redirect: '/teams'},
         { 
+            name: 'teams',
             path: '/teams', 
             component: TeamsList,
             children: [ // ex) /temas/t1
-                { path: ':teamId', component: TeamMembers, props: true }, // <router-view>는 root route들만 인식하므로 children은 parent route에서 따로 <router-view> 설정을 해줘야함
+                { name: 'team-members', path: ':teamId', component: TeamMembers, props: true }, // <router-view>는 root route들만 인식하므로 children은 parent route에서 따로 <router-view> 설정을 해줘야함
             ]
         }, // our-domain.com/teams => teamsList
         { path: '/users', component: UsersList }, 

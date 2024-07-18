@@ -4,15 +4,20 @@
     <button @click="animateBlock">Animate</button>
   </div>
   <div class="container">
-    <transition>
+    <transition name = "para">
       <p v-if="paraIsVisible">This is only sometimes visible...</p>
     </transition>
     <button @click="toggleParagraph">Toggle Paragraph</button>
-  </div>
-  <base-modal @close="hideDialog" v-if="dialogIsVisible">
-    <p>This is a test dialog!</p>
-    <button @click="hideDialog">Close it!</button>
-  </base-modal>
+  </div> <!-- transitoin은 v-if, v-show같은 조건으로 DOM에서 요소 자체가 제거될 때 애니메이션 효과를 적용하기 위해 사용됨. * animation기능 쓸 땐 to, from없이 active로도 충분 -->
+  <!-- <transition name="modal">  transition은 하나의 직속 자식요소만 허용함. 여기선 커스텀 컴포넌트인 base-modal에서 폴스루가 일어났을때 2개의 root 요소가 있으므로 1개가 아니게 됨-->
+    <!-- <base-modal @close="hideDialog" v-if="dialogIsVisible"> // transition에 v-if or v-show or 동적컴포넌트 요소가 있어야 하므로 transition을 base-modal로 옮긴것처럼 v-if 로직도 옮겨야함. prop으로 boolean요소 전달하는 방식으로 바꿈
+      <p>This is a test dialog!</p>
+      <button @click="hideDialog">Close it!</button>
+    </base-modal> -->
+    <base-modal @close="hideDialog" :open="dialogIsVisible"> <!--  prop으로 boolean요소 전달하는 방식으로 바꿈 -->
+      <p>This is a test dialog!</p>
+      <button @click="hideDialog">Close it!</button>
+    </base-modal>
   <div class="container">
     <button @click="showDialog">Show Dialog</button>
   </div>
@@ -90,33 +95,29 @@ button:active {
   /* transform: translateX(-150px); */
   animation: slide-fade 0.3s ease-out forwards;
 }
-
-.v-enter-from {
-  /* opacity: 0;
-  transform: translateY(-30px); */
+.para-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
 }
-
-.v-enter-active {
-  animation: slide-scale 0.3s ease-out;
+.para-enter-active {
+  transition: all 0.5s ease-out;
+  /* animation: slide-scale 0.3s ease-out; */
 }
-
-.v-enter-to {
-  /* opacity: 1;
-  transform: translateY(0); */
+.para-enter-to {
+  opacity: 1;
+  transform: translateY(0);
 }
-
-.v-leave-from {
-  /* opacity: 1;
-  transform: translateY(0); */
+.para-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
-
-.v-leave-active {
-  animation: slide-scale 0.3s ease-out;
+.para-leave-active {
+  transition: all 1s ease-out;
+  /* animation: slide-scale 0.3s ease-out; */
 }
-
-.v-leave-to {
-  /* opacity: 0;
-  transform: translateY(-30px); */
+.para-leave-to {
+  opacity: 1;
+  transform: translateY(-30px);
 }
 
 @keyframes slide-scale {

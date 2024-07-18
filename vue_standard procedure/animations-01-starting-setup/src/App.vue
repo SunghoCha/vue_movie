@@ -4,11 +4,26 @@
     <button @click="animateBlock">Animate</button>
   </div>
   <div class="container">
-    <transition name = "para">
+    <transition 
+      name = "para"
+      @before-enter="beforeEnter" 
+      @before-leave="beforeLeave" 
+      @enter="enter" 
+      @afterEnter="afterEnter"
+      @leave="leave"
+      @after-leave="afterLeave"
+    >
       <p v-if="paraIsVisible">This is only sometimes visible...</p>
     </transition>
     <button @click="toggleParagraph">Toggle Paragraph</button>
-  </div> <!-- transitoin은 v-if, v-show같은 조건으로 DOM에서 요소 자체가 제거될 때 애니메이션 효과를 적용하기 위해 사용됨. * animation기능 쓸 땐 to, from없이 active로도 충분 -->
+  </div>
+  <div class="container">
+    <transition name="fade-button" mode="out-in"> <!-- transition내의 자식 요소가 DOM에서 제거되는 동시에 이를 대체하는 형제자식요소가 있으면 transition이 여러 자식 가지는거 가능-->
+      <button @click="showUsers" v-if="!usersAreVisible">Show Users</button>
+      <button @click="hideUsers" v-else>Hide Users</button>
+    </transition>
+  </div>
+  <!-- transitoin은 v-if, v-show같은 조건으로 DOM에서 요소 자체가 제거될 때 애니메이션 효과를 적용하기 위해 사용됨. * animation기능 쓸 땐 to, from없이 active로도 충분 -->
   <!-- <transition name="modal">  transition은 하나의 직속 자식요소만 허용함. 여기선 커스텀 컴포넌트인 base-modal에서 폴스루가 일어났을때 2개의 root 요소가 있으므로 1개가 아니게 됨-->
     <!-- <base-modal @close="hideDialog" v-if="dialogIsVisible"> // transition에 v-if or v-show or 동적컴포넌트 요소가 있어야 하므로 transition을 base-modal로 옮긴것처럼 v-if 로직도 옮겨야함. prop으로 boolean요소 전달하는 방식으로 바꿈
       <p>This is a test dialog!</p>
@@ -30,9 +45,41 @@ export default {
       animatedBlock: false,
       dialogIsVisible: false,
       paraIsVisible: false,
+      usersAreVisible: false
     };
   },
   methods: {
+    // 자동으로 갖게 되는 인수 el : 해당 DOM 요소
+    beforeEnter(el) {  // 진입 전
+      console.log('beforeEnter');
+      console.log(el);
+    },
+    enter(el) { //
+      console.log('enter');
+      console.log(el);
+    },
+    afterEnter(el) { // 애니메이션 끝날 때 실행
+      console.log('afterEnter')   
+      console.log(el);
+    },
+    beforeLeave(el) { // 다 끝나고 다른 곳으로 이동 전
+      console.log('beforeLeave');
+      console.log(el);
+    },
+    leave(el) {
+      console.log('leave');
+      console.log(el);
+    },
+    afterLeave(el) {
+      console.log('afterLeave');
+      console.log(el);
+    },
+    showUsers() {
+      this.usersAreVisible = true;
+    },
+    hideUsers() {
+      this.usersAreVisible = false;
+    },
     animateBlock() {
       this.animatedBlock = !this.animatedBlock;
     },
@@ -95,29 +142,54 @@ button:active {
   /* transform: translateX(-150px); */
   animation: slide-fade 0.3s ease-out forwards;
 }
+
 .para-enter-from {
   opacity: 0;
   transform: translateY(-30px);
 }
+
 .para-enter-active {
   transition: all 0.5s ease-out;
   /* animation: slide-scale 0.3s ease-out; */
 }
+
 .para-enter-to {
   opacity: 1;
   transform: translateY(0);
 }
+
 .para-leave-from {
   opacity: 1;
   transform: translateY(0);
 }
+
 .para-leave-active {
   transition: all 1s ease-out;
   /* animation: slide-scale 0.3s ease-out; */
 }
+
 .para-leave-to {
   opacity: 1;
   transform: translateY(-30px);
+}
+
+.fade-button-enter-from,
+.fade-button-leave-to {
+  opacity: 0;
+}
+
+.fade-button-enter-active {
+  transition: opacity 0.3s ease-out;
+}
+
+.fade-button-leave-active {
+  transition: opacity 0.3s ease-in;
+}
+
+
+.fade-button-enter-to,
+.fade-button-leave-from {
+opacity: 1;
 }
 
 @keyframes slide-scale {

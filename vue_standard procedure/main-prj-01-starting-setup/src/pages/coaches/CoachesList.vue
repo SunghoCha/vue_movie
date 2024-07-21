@@ -1,6 +1,6 @@
 <template>
 	<section>
-		FILTER
+		<coach-filter></coach-filter>
 	</section>
 	<section>
 		<base-card>
@@ -25,10 +25,12 @@
 </template>
 
 <script>
+import CoachFilter from '../../components/coaches/CoachFilter.vue';
 import CoachItem from '../../components/coaches/CoachItem.vue';
 	export default {
 		components: {
-			CoachItem
+			CoachItem,
+			CoachFilter
 		},
 		computed: {
 			filteredCoaches() {

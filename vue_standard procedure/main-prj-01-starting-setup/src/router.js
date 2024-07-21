@@ -12,9 +12,14 @@ const router =  createRouter({
 	routes: [
 		{ path: '/', redirect: '/coaches'},
 		{ path: '/coaches', component: CoachesList },
-		{ path: '/coaches/:id', component: CoachDetail, children: [
-			{ path: 'contact', component: ContactCoache }, // /coaches/c1/contact
-		] },
+		{ 
+			path: '/coaches/:id', 
+			component: CoachDetail,
+			props: true, // id값을 prop으로 받을 수 있게 됨 
+			children: [
+				{ path: 'contact', component: ContactCoache }, // /coaches/c1/contact
+			] 
+		},
 		{ path: '/register', component: CoachRegistation},
 		{ path: '/requests', component: RequestsReceived},
 		{ path: '/:notFound(.*)', component: NotFound},

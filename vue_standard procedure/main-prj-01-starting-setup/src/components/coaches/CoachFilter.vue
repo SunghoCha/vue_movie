@@ -6,7 +6,7 @@
 			<label for="frontend">Frontend</label>
 		</span>
 		<span class="filter-option">
-			<input type="checkbox" id="frontend" checked @change="setFilter" />
+			<input type="checkbox" id="backend" checked @change="setFilter" />
 			<label for="backend">Backend</label>
 		</span>
 		<span class="filter-option">
@@ -26,18 +26,18 @@
 					backend: true,
 					career: true
 				},
-				methods: {
-					setFilter(event) {
-						const inputId = event.target.id;
-						const isActive = event.target.checked;
-						const updatedFilters = {
-							...this.filters,
-							[inputId]: isActive
-						};
-						this.filters = updatedFilters;
-						this.$emit('change-filter', updatedFilters);
-					}
-				}
+			};
+		},
+		methods: {
+			setFilter(event) {
+				const inputId = event.target.id;
+				const isActive = event.target.checked;
+				const updatedFilters = {
+					...this.filters,
+					[inputId]: isActive
+				};
+				this.filters = updatedFilters;
+				this.$emit('change-filter', updatedFilters);
 			}
 		}
 	}

@@ -7,7 +7,7 @@
 		</div>
 		<div class="form-control" :class="{invalid: !message.isValid}">
 			<label for="message">Message</label>
-			<textarea rows="5" id="message" v-model.trim="message.val" @blur="claerValidity('message')"></textarea>
+			<textarea rows="5" id="message" v-model.trim="message.val" @blur="clearValidity('message')"></textarea>
 			<p v-if="!message.isValid">Enter a non-empty message.</p>
 		</div>
 		<p class="erros" v-if="!formIsValid">Please fix the above errors and submit again.</p>
@@ -37,7 +37,8 @@
 				this[input].isValid = true;
 			},
 			validateForm() {
-				if (this.email.val === '' || !this.email.includes('@')) {
+				this.formIsValid = true;
+				if (this.email.val === '' || !this.email.val.includes('@')) {
 					this.email.isValid = false;
 					this.formIsValid = false;
 				}
@@ -48,6 +49,14 @@
 			},
 			submitForm() {
 				this.validateForm();
+				if (this.formIsValid) {
+					this.$store.dispatch('requests/contactCoach', {
+						coachId : this.$route.params.id,
+						email: this.email.val,
+						message: this.message.val,
+					});
+					this.$router.replace('/coaches');
+				}
 			},
 		}
 	}

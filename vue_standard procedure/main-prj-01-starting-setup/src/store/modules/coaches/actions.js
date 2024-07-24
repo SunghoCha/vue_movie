@@ -58,5 +58,15 @@ export default {
       coaches.push(coach);
     }
     context.commit('setCoaches', coaches);
+  },
+  async fetchRequests(context) {
+    const coachId = context.rootGetters.userId;
+    const response = await fetch('http://localhost:80/mentoring/${coachId}')
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to fetch requests.')
+      throw error;
+    }
   }
 };

@@ -12,7 +12,7 @@ export default {
     const response = await fetch(`http://localhost:80/coaches/${userId}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'  // 이 부분을 추가합니다.
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(coachData)
     })

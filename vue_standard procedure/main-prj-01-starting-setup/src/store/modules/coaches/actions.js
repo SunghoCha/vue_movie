@@ -61,7 +61,7 @@ export default {
   },
   async fetchRequests(context) {
     const coachId = context.rootGetters.userId;
-    const response = await fetch('http://localhost:80/mentoring/${coachId}')
+    const response = await fetch(`http://localhost:80/mentoring/${coachId}`)
     const responseData = await response.json();
 
     if (!response.ok) {

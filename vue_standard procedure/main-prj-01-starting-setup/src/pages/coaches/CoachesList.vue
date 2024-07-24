@@ -1,4 +1,7 @@
 <template>
+	<base-dialog :show="!!error" title="에러 발생!" @close="handleError"> <!-- error: 문자열 전달됨, !error: 반대값 전달, !!error : boolean 전달(false: null or undefined , 값이 있으면 true)-->
+		<p>{{  error }}</p>
+	</base-dialog>
 	<section>
 		<coach-filter @change-filter="setFilters"></coach-filter>
 	</section>
@@ -38,6 +41,7 @@ import CoachItem from '../../components/coaches/CoachItem.vue';
 		data() {
 			return {
 				isLoading: false,
+				error: null,
 				activeFilters: {
 					frontend: true,
 					backend: true,
@@ -83,8 +87,15 @@ import CoachItem from '../../components/coaches/CoachItem.vue';
 			},
 			async loadCoaches() {
 				this.isLoading = true;
-				await this.$store.dispatch('coaches/loadCoaches');
+				try {
+					await this.$store.dispatch('coaches/loadCoaches');
+				} catch (error) {
+					this.error = error.message || 'Something went wrong!!'
+				}
 				this.isLoading = false;
+			},
+			handleError() {
+				this.error = null;
 			}
 		}
 	}

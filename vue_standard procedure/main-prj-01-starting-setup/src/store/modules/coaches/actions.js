@@ -39,8 +39,9 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      // 에러 핸들링...
       console.log("Get 요청 실패");
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
     }
 
     const coaches = [];

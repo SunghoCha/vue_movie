@@ -1,16 +1,18 @@
 <template>
   <base-card>
     <form @submit.prevent="submitForm">
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !email.isValid}">
         <label for="email">E-Mail</label>
-        <input type="email" id="email" v-model.trim="email" @blur="clearValidity('email')"/>
+        <input type="email" id="email" v-model.trim="email.val" @blur="clearValidity('email')"/>
+        <p v-if="!email.isValid">Enter a valid email.</p>
       </div>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid: !password.isValid}">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model.trim="password" @blur="clearValidity('password')"/>
+        <input type="password" id="password" v-model.trim="password.val" @blur="clearValidity('password')"/>
+        <p v-if="!password.isValid">Enter a valid password.</p>
       </div>
-      <base-button>Login</base-button>
-      <base-button type="button" mode="flat" @click="switchAuthMode">Signup instead</base-button>
+      <base-button>{{ submitButtonCaption }}</base-button>
+      <base-button type="button" mode="flat" @click="switchAuthMode">{{ swithModeButtonCaption }}</base-button>
     </form>
   </base-card>
 </template>
@@ -31,6 +33,22 @@
         mode: 'login',
       };
     },
+    computed: {
+      submitButtonCaption() {
+        if (this.mode === 'login') {
+          return 'Login';
+        } else {
+          return 'Signup';
+        }
+      },
+      swithModeButtonCaption() {
+        if (this.mode === 'login') {
+          return 'Signup instead';
+        } else {
+          return 'Login instead';
+        }
+      }
+    },
     methods: {
       clearValidity(input) {
         this[input].isValid = true;
@@ -48,12 +66,25 @@
       },
       submitForm() {
         this.validateForm();
-        if (this.formIsValid) {
+        if (!this.formIsValid) {
+          return;
+        }
         
+        if (this.mode === 'login') {
+          // ..
+        } else {
+          this.$store.dispatch('signup', {
+            email: this.email.val,
+            password: this.password.val
+          }); // namespace 사용안함
         }
       },
       switchAuthMode() {
-
+        if (this.mode === 'login') {
+          this.mode = 'signup'
+        } else {
+          this.mode = 'login'
+        }
       }
     }
     
@@ -90,5 +121,14 @@ textarea:focus {
   border-color: #3d008d;
   background-color: #faf6ff;
   outline: none;
+}
+
+.invalid label {
+  color: red;
+}
+
+.invalid input,
+.invalid textarea {
+  border: 1px solid red;
 }
 </style>

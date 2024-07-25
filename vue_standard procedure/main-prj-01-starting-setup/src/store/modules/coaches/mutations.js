@@ -4,6 +4,9 @@ export default {
   },
   setCoaches(state, payload) {
     state.coaches = payload;
-    console.log(state.coaches);
+    localStorage.setItem('coaches', JSON.stringify(state.coaches));
+  },
+  setFetchTimestamp(state) {
+    state.lastFetch = new Date().getTime();
   }
 }

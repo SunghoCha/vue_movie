@@ -1,33 +1,35 @@
 <template>
-	<base-dialog :show="!!error" title="에러 발생!" @close="handleError"> <!-- error: 문자열 전달됨, !error: 반대값 전달, !!error : boolean 전달(false: null or undefined , 값이 있으면 true)-->
-		<p>{{  error }}</p>
-	</base-dialog>
-	<section>
-		<coach-filter @change-filter="setFilters"></coach-filter>
-	</section>
-	<section>
-		<base-card>
-			<div class="controls">
-				<base-button mode="outline" @click="loadCoaches">Refresh</base-button>
-				<base-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</base-button>
-			</div>
-			<div v-if="isLoading">
-				<base-spinner></base-spinner>
-			</div>
-			<ul v-else-if="hasCoaches">
-				<coach-item v-for="coach in filteredCoaches"
-					:key="coach.id" 
-					:id="coach.id" 
-					:first-name="coach.firstName"
-					:last-name="coach.lastName"
-					:rate="coach.hourlyRate"
-					:areas="coach.areas"
-				>
-				</coach-item>
-			</ul>
-			<h3 v-else>No Coaches found.</h3>
-		</base-card>
-	</section>
+	<div>
+		<base-dialog :show="!!error" title="에러 발생!" @close="handleError"> <!-- error: 문자열 전달됨, !error: 반대값 전달, !!error : boolean 전달(false: null or undefined , 값이 있으면 true)-->
+			<p>{{  error }}</p>
+		</base-dialog>
+		<section>
+			<coach-filter @change-filter="setFilters"></coach-filter>
+		</section>
+		<section>
+			<base-card>
+				<div class="controls">
+					<base-button mode="outline" @click="loadCoaches(true)">Refresh</base-button>
+					<base-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</base-button>
+				</div>
+				<div v-if="isLoading">
+					<base-spinner></base-spinner>
+				</div>
+				<ul v-else-if="hasCoaches">
+					<coach-item v-for="coach in filteredCoaches"
+						:key="coach.id" 
+						:id="coach.id" 
+						:first-name="coach.firstName"
+						:last-name="coach.lastName"
+						:rate="coach.hourlyRate"
+						:areas="coach.areas"
+					>
+					</coach-item>
+				</ul>
+				<h3 v-else>No Coaches found.</h3>
+			</base-card>
+		</section>
+	</div>
 </template>
 
 <script>
@@ -85,10 +87,10 @@ import CoachItem from '../../components/coaches/CoachItem.vue';
 			setFilters(updatedFilters) {
 				this.activeFilters = updatedFilters;
 			},
-			async loadCoaches() {
+			async loadCoaches(refresh = false) { // refresh의 default 값을 false로 설정
 				this.isLoading = true;
 				try {
-					await this.$store.dispatch('coaches/loadCoaches');
+					await this.$store.dispatch('coaches/loadCoaches', {forceRefresh: refresh}); // Refresh 버튼 눌렀을때만 true
 				} catch (error) {
 					this.error = error.message || 'Something went wrong!!'
 				}

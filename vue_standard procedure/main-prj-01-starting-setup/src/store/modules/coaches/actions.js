@@ -33,7 +33,12 @@ export default {
   },
 
   // 기본 GET 방식
-  async loadCoaches(context) {
+  async loadCoaches(context, payload) {
+
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) { // Refresh버튼 누를 경우에는 시간상관 없이 fetch
+      return;
+    }
+
     const response = await fetch(
       `http://localhost:80/coaches`
     );
@@ -59,5 +64,6 @@ export default {
       coaches.push(coach);
     }
     context.commit('setCoaches', coaches);
+    context.commit('setFetchTimestamp');
   },
 };

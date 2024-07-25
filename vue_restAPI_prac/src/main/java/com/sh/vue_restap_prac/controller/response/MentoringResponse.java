@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 public class MentoringResponse {
 
     private Long id;
-    private Coach coach;
+    private CoachResponse coachResponse;
     private String userEmail;
     private String message;
 
     @Builder
-    public MentoringResponse(Long id, Coach coach, String userEmail, String message) {
+    public MentoringResponse(Long id, CoachResponse coachResponse, String userEmail, String message) {
         this.id = id;
-        this.coach = coach;
+        this.coachResponse = coachResponse;
         this.userEmail = userEmail;
         this.message = message;
     }

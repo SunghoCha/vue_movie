@@ -1,6 +1,7 @@
 package com.sh.vue_restap_prac.service;
 
 import com.sh.vue_restap_prac.controller.request.MentoringCreate;
+import com.sh.vue_restap_prac.controller.response.CoachResponse;
 import com.sh.vue_restap_prac.controller.response.MentoringResponse;
 import com.sh.vue_restap_prac.domain.Coach;
 import com.sh.vue_restap_prac.domain.Mentoring;
@@ -32,7 +33,7 @@ public class MentoringService {
         return mentoringRepository.findById(coachId).stream()
                 .map(Mentoring -> MentoringResponse.builder()
                         .id(Mentoring.getId())
-                        .coach(Mentoring.getCoach())
+                        .coachResponse(CoachResponse.of(Mentoring.getCoach()))
                         .userEmail(Mentoring.getUserEmail())
                         .message(Mentoring.getMessage())
                         .build())

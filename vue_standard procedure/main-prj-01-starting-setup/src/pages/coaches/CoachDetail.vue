@@ -31,10 +31,29 @@
 			};
 		},
 		created() {
-			this.selectedCoach = this.$store.getters['coaches/coaches'].find(coach => coach.id === this.id);
+			// 타입 확인 (넘어온 coachId는 Long -> number로 처리되고 this.id는 String)
+			console.log("Type of this.id:", typeof this.id);
+			const coaches = this.$store.getters['coaches/coaches'];
+			coaches.forEach(coach => {
+				console.log("Type of coach.id:", typeof coach.id);
+			});
+
+			// 요청 데이터 확인
+			console.log('Number of coaches:', coaches.length);
+			coaches.forEach(coach => {
+				console.log('Coach ID:', coach.id);
+				console.log('First Name:', coach.firstName);
+				console.log('Last Name:', coach.lastName);
+				console.log('Areas:', coach.areas);
+				console.log('Description:', coach.description);
+				console.log('Hourly Rate:', coach.hourlyRate);
+			});
+
+			this.selectedCoach = coaches.find(coach => String(coach.id) === String(this.id));
 		},
 		computed: {
 			fullName() {
+				console.log(this.selectedCoach.firstName);
 				return this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName;
 			},
 			areas() {

@@ -31,6 +31,7 @@ export default {
     });
     console.log("post 요청 커밋");
   },
+
   // 기본 GET 방식
   async loadCoaches(context) {
     const response = await fetch(
@@ -48,7 +49,7 @@ export default {
 
     for (const key in responseData) {
       const coach = {
-        id : key,
+        id : responseData[key].id,
         firstName : responseData[key].firstName,
         lastName : responseData[key].lastName,
         description: responseData[key].description,
@@ -59,14 +60,4 @@ export default {
     }
     context.commit('setCoaches', coaches);
   },
-  async fetchRequests(context) {
-    const coachId = context.rootGetters.userId;
-    const response = await fetch(`http://localhost:80/mentoring/${coachId}`)
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to fetch requests.')
-      throw error;
-    }
-  }
 };
